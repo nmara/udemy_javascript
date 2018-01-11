@@ -174,36 +174,71 @@
 //////////////////////////////////////////////////
 // Lecture: Closures
 
-function retirement(retirementAge) {
-    var a = " years left until retirement.";
-    return function(yearOfBirth) { //Anonimowa funkcja
-        var age = 2018 - yearOfBirth;
-        console.log((retirementAge - age) + a);
+// function retirement(retirementAge) {
+//     var a = " years left until retirement.";
+//     return function(yearOfBirth) { //Anonimowa funkcja
+//         var age = 2018 - yearOfBirth;
+//         console.log((retirementAge - age) + a);
+//     }
+// }
+//
+// var retirementUS = retirement(66);
+// retirementUS(1990);
+// // retirement(66)(1990); //The same result as above
+//
+// var retirementGermany = retirement(65);
+// var retirementIceland = retirement(67);
+//
+// retirementGermany(1990);
+// retirementIceland(1990);
+//
+// function interviewQuestion(job) {
+//     return function(name) {
+//         if (job === "designer") {
+//             console.log(name + ", can you please explain what UX design is?");
+//         }
+//         else if (job === "teacher") {
+//             console.log("What subject do you teach, " + name +"?");
+//         }
+//         else {
+//             console.log("Hello " + name + ", what do you do?");
+//         }
+//     }
+// }
+//
+// interviewQuestion("designer")("Jane");
+
+
+///////////////////////////////////////////////
+// Lecture: Bind, call and apply
+
+var john = {
+    name: "John",
+    age: 26,
+    job: "teacher",
+    presentation: function(style, timeOfDay) {
+        if (style === "formal") {
+            console.log("Good " + timeOfDay + ", Ladies and gentlemen! I'm " + this.name + ", I'm a " + this.job + " and I'm " + this.age + " years old.");
+        } else if (style === "friendly") {
+            console.log("Hey! What's up? I'm " + this.name + "I'm a " + this.job + " and I'm " + this.age + " years old. Have a nice " + timeOfDay + ".");
+        }
     }
-}
+};
 
-var retirementUS = retirement(66);
-retirementUS(1990);
-// retirement(66)(1990); //The same result as above
+var emily = {
+    name: "Emily",
+    age: 35,
+    job: "desiner"
+};
 
-var retirementGermany = retirement(65);
-var retirementIceland = retirement(67);
+john.presentation("formal", "morning");
+john.presentation.call(emily, "formal", "morning"); //method borrowing
 
-retirementGermany(1990);
-retirementIceland(1990);
+// john.presentation.apply(emily, ["friendly", "afternoon"]); //It works only with a array as a second argument.
 
-function interviewQuestion(job) {
-    return function(name) {
-        if (job === "designer") {
-            console.log(name + ", can you please explain what UX design is?");
-        }
-        else if (job === "teacher") {
-            console.log("What subject do you teach, " + name +"?");
-        }
-        else {
-            console.log("Hello " + name + ", what do you do?");
-        }
-    }
-}
+var johnFriendly = john.presentation.bind(john, "friendly"); //Bind needs var and you can set only the first argument
+johnFriendly("morning"); //You set the second argument while calling the function
+johnFriendly("night");
 
-interviewQuestion("designer")("Jane");
+var emilyFormal = john.presentation.bind(emily, "formal");
+emilyFormal("afternoon");
