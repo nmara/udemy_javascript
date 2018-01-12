@@ -247,7 +247,7 @@
 ////////////////////////////////////////////////////////////
 // Lecture: Coding Challenge
 (function() {
-    // var score = 0;
+    var score = 0;
 
     function Question(question, answers, correctAnswer) {
         this.question = question;
@@ -265,8 +265,13 @@
     Question.prototype.checkAnswer = function(ans) {
         if (ans === this.correctAnswer) {
             console.log("Correct!");
+            score ++;
+            console.log("Your current score is " + score + "!");
+            console.log("----------------------------");
         } else {
             console.log("Wrong");
+            console.log("Your current score is " + score + "!");
+            console.log("----------------------------");
         }
     }
 
@@ -282,27 +287,20 @@
 
     var allQuestions = [q1, q2, q3, q4, q5];
 
-    var randomNumber = Math.floor(Math.random() * allQuestions.length);
+    function nextRound() {
 
-    allQuestions[randomNumber].show();
+        var randomNumber = Math.floor(Math.random() * allQuestions.length);
 
-    var userInput = parseInt(prompt("Please select the correct answer (just type the number). Or type exit to quit."));
+        allQuestions[randomNumber].show();
 
-    allQuestions[randomNumber].checkAnswer(userInput);
-    // allQuestions[randomNumber].show();
+        var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
 
-    // var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
-    //
-    // allQuestions[randomNumber].checkAnswer();
-    //
-    // var nextRound = function() {
-    //     allQuestions[randomNumber].show();
-    //
-    //     var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
-    //
-    //     allQuestions[randomNumber].checkAnswer();
-    // };
-    // nextRound();
-    // nextRound();
+        if (userInput !== "exit") {
+            allQuestions[randomNumber].checkAnswer(parseInt(userInput));
+            nextRound();  //This part was missing before!!!
+        }
+
+    }
+    nextRound();
 
 })();
