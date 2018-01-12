@@ -247,6 +247,8 @@
 ////////////////////////////////////////////////////////////
 // Lecture: Coding Challenge
 (function() {
+    var score = 0;
+
     var Question = function(question, answers, correctAnswer) {
         this.question = question;
         this.answers = answers;
@@ -260,8 +262,11 @@
         this.checkAnswer = function() {
             if (userInput === this.correctAnswer) {
                 console.log("Correct!");
+                score += 1;
+                console.log("Your current score is " + score);
             } else {
                 console.log("Wrong :(");
+                console.log("Your current score is " + score);
             }
         }
     }
@@ -286,4 +291,15 @@
     var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
 
     allQuestions[randomNumber].checkAnswer();
+
+    var nextRound = function() {
+        allQuestions[randomNumber].show();
+
+        var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
+
+        allQuestions[randomNumber].checkAnswer();
+    };
+    nextRound();
+    nextRound();
+
 })();
