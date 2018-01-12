@@ -211,34 +211,79 @@
 
 ///////////////////////////////////////////////
 // Lecture: Bind, call and apply
+//
+// var john = {
+//     name: "John",
+//     age: 26,
+//     job: "teacher",
+//     presentation: function(style, timeOfDay) {
+//         if (style === "formal") {
+//             console.log("Good " + timeOfDay + ", Ladies and gentlemen! I'm " + this.name + ", I'm a " + this.job + " and I'm " + this.age + " years old.");
+//         } else if (style === "friendly") {
+//             console.log("Hey! What's up? I'm " + this.name + "I'm a " + this.job + " and I'm " + this.age + " years old. Have a nice " + timeOfDay + ".");
+//         }
+//     }
+// };
+//
+// var emily = {
+//     name: "Emily",
+//     age: 35,
+//     job: "desiner"
+// };
+//
+// john.presentation("formal", "morning");
+// john.presentation.call(emily, "formal", "morning"); //method borrowing
+//
+// // john.presentation.apply(emily, ["friendly", "afternoon"]); //It works only with a array as a second argument.
+//
+// var johnFriendly = john.presentation.bind(john, "friendly"); //Bind needs var and you can set only the first argument
+// johnFriendly("morning"); //You set the second argument while calling the function
+// johnFriendly("night");
+//
+// var emilyFormal = john.presentation.bind(emily, "formal");
+// emilyFormal("afternoon");
 
-var john = {
-    name: "John",
-    age: 26,
-    job: "teacher",
-    presentation: function(style, timeOfDay) {
-        if (style === "formal") {
-            console.log("Good " + timeOfDay + ", Ladies and gentlemen! I'm " + this.name + ", I'm a " + this.job + " and I'm " + this.age + " years old.");
-        } else if (style === "friendly") {
-            console.log("Hey! What's up? I'm " + this.name + "I'm a " + this.job + " and I'm " + this.age + " years old. Have a nice " + timeOfDay + ".");
+
+////////////////////////////////////////////////////////////
+// Lecture: Coding Challenge
+(function() {
+    var Question = function(question, answers, correctAnswer) {
+        this.question = question;
+        this.answers = answers;
+        this.correctAnswer = correctAnswer;
+        this.show = function() {
+            console.log(this.question);
+            for (var i = 0; i < this.answers.length; i++) {
+                console.log(this.answers[i]);
+            }
+        }
+        this.checkAnswer = function() {
+            if (userInput === this.correctAnswer) {
+                console.log("Correct!");
+            } else {
+                console.log("Wrong :(");
+            }
         }
     }
-};
 
-var emily = {
-    name: "Emily",
-    age: 35,
-    job: "desiner"
-};
+    var q1 = new Question("Name the world's biggest island.", ["Australia", "Iceland", "Greenland"], "Greenland");
 
-john.presentation("formal", "morning");
-john.presentation.call(emily, "formal", "morning"); //method borrowing
+    var q2 = new Question("Name the world's largest ocean.", ["Atlantic", "Pacific", "Indian Ocean", "Arctic Ocean"], "Pacific");
 
-// john.presentation.apply(emily, ["friendly", "afternoon"]); //It works only with a array as a second argument.
+    var q3 = new Question("Which country is Rome in?", ["Italy", "Poland", "US", "China"], "Italy");
 
-var johnFriendly = john.presentation.bind(john, "friendly"); //Bind needs var and you can set only the first argument
-johnFriendly("morning"); //You set the second argument while calling the function
-johnFriendly("night");
+    var q4 = new Question("What is the world's longest river?", ["Amazon", "Vistula", "Nile", "Yangtze"], "Amazon");
 
-var emilyFormal = john.presentation.bind(emily, "formal");
-emilyFormal("afternoon");
+    var q5 = new Question("What is the capital of Slovakia?", ["Warsaw", "Bratislava", "Budapest", "Prague"], "Bratislava");
+
+    var allQuestions = [q1, q2, q3, q4, q5];
+
+    var randomNumber = Math.floor(Math.random() * 5);
+    console.log(randomNumber);
+
+    allQuestions[randomNumber].show();
+
+    var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
+
+    allQuestions[randomNumber].checkAnswer();
+})();
