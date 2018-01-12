@@ -247,59 +247,62 @@
 ////////////////////////////////////////////////////////////
 // Lecture: Coding Challenge
 (function() {
-    var score = 0;
+    // var score = 0;
 
-    var Question = function(question, answers, correctAnswer) {
+    function Question(question, answers, correctAnswer) {
         this.question = question;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
-        this.show = function() {
-            console.log(this.question);
-            for (var i = 0; i < this.answers.length; i++) {
-                console.log(this.answers[i]);
-            }
-        }
-        this.checkAnswer = function() {
-            if (userInput === this.correctAnswer) {
-                console.log("Correct!");
-                score += 1;
-                console.log("Your current score is " + score);
-            } else {
-                console.log("Wrong :(");
-                console.log("Your current score is " + score);
-            }
+    }
+
+    Question.prototype.show = function() {
+        console.log(this.question);
+        for (var i = 0; i < this.answers.length; i++) {
+            console.log(i + ": " + this.answers[i]);
         }
     }
 
-    var q1 = new Question("Name the world's biggest island.", ["Australia", "Iceland", "Greenland"], "Greenland");
+    Question.prototype.checkAnswer = function(ans) {
+        if (ans === this.correctAnswer) {
+            console.log("Correct!");
+        } else {
+            console.log("Wrong");
+        }
+    }
 
-    var q2 = new Question("Name the world's largest ocean.", ["Atlantic", "Pacific", "Indian Ocean", "Arctic Ocean"], "Pacific");
+    var q1 = new Question("Name the world's biggest island.", ["Australia", "Iceland", "Greenland"], 2);
 
-    var q3 = new Question("Which country is Rome in?", ["Italy", "Poland", "US", "China"], "Italy");
+    var q2 = new Question("Name the world's largest ocean.", ["Atlantic", "Pacific", "Indian Ocean", "Arctic Ocean"], 1);
 
-    var q4 = new Question("What is the world's longest river?", ["Amazon", "Vistula", "Nile", "Yangtze"], "Amazon");
+    var q3 = new Question("Which country is Rome in?", ["Italy", "Poland", "US", "China"], 0);
 
-    var q5 = new Question("What is the capital of Slovakia?", ["Warsaw", "Bratislava", "Budapest", "Prague"], "Bratislava");
+    var q4 = new Question("What is the world's longest river?", ["Amazon", "Vistula", "Nile", "Yangtze"], 0);
+
+    var q5 = new Question("What is the capital of Slovakia?", ["Warsaw", "Bratislava", "Budapest", "Prague"], 1);
 
     var allQuestions = [q1, q2, q3, q4, q5];
 
-    var randomNumber = Math.floor(Math.random() * 5);
-    console.log(randomNumber);
+    var randomNumber = Math.floor(Math.random() * allQuestions.length);
 
     allQuestions[randomNumber].show();
 
-    var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
+    var userInput = parseInt(prompt("Please select the correct answer (just type the number). Or type exit to quit."));
 
-    allQuestions[randomNumber].checkAnswer();
+    allQuestions[randomNumber].checkAnswer(userInput);
+    // allQuestions[randomNumber].show();
 
-    var nextRound = function() {
-        allQuestions[randomNumber].show();
-
-        var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
-
-        allQuestions[randomNumber].checkAnswer();
-    };
-    nextRound();
-    nextRound();
+    // var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
+    //
+    // allQuestions[randomNumber].checkAnswer();
+    //
+    // var nextRound = function() {
+    //     allQuestions[randomNumber].show();
+    //
+    //     var userInput = prompt("Please select the correct answer (just type the number). Or type exit to quit.");
+    //
+    //     allQuestions[randomNumber].checkAnswer();
+    // };
+    // nextRound();
+    // nextRound();
 
 })();
